@@ -27,7 +27,7 @@
   "Configure an appender for this request"
   [context]
   {:enabled?       true
-   :async?         true
+   :async?         false
    :min-level      :info
    :output-fn      (partial output (.getAwsRequestId context))
    :timestamp-opts {:pattern  "yyyy-MM-dd HH:mm:ss"
