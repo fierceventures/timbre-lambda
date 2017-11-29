@@ -1,4 +1,4 @@
-(defproject fierce/timbre-lambda "0.0.1"
+(defproject fierce/timbre-lambda "0.0.2"
   :author "Stuart King <https://fierce.ventures>"
   :description "timbre appender for AWS Lambda"
   :license {:name         "Eclipse Public License"
