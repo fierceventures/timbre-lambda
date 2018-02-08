@@ -4,24 +4,21 @@
   (:import (com.amazonaws.services.lambda.runtime LambdaRuntime)))
 
 (defn- output
-  [request-id data]
-  (let [{:keys [level ?err msg_ ?ns-str ?file
-                timestamp_ ?line]} data]
-    (str
-      (force timestamp_) " "
-      (str "<" request-id "> ")
-      (str/upper-case (name level)) " "
-      "[" (or ?ns-str ?file "?") ":" (or ?line "?") "] - "
-      (force msg_)
-      (when-let [err ?err]
-        (str "\n" (timbre/stacktrace err))))))
+  [request-id {:keys [level ?err msg_ ?ns-str ?file timestamp_ ?line]}]
+  (str
+    (force timestamp_) " "
+    (str "<" request-id "> ")
+    (str/upper-case (name level)) " "
+    "[" (or ?ns-str ?file "?") ":" (or ?line "?") "] - "
+    (force msg_)
+    (when-let [err ?err]
+      (str "\n" (timbre/stacktrace err)))))
 
 (def ^:private logger (LambdaRuntime/getLogger))
 
 (defn- log
-  [data]
-  (let [{:keys [output_]} data]
-    (.log logger (force output_))))
+  [{:keys [output_]}]
+  (.log logger (force output_)))
 
 (defn- appender
   "Configure an appender for this request"
